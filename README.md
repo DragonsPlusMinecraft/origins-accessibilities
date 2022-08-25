@@ -43,13 +43,13 @@ providing the best protection for Elytrian.
 
 ### Effects
 
-####Water Resistance
+#### Water Resistance
 - Protects players from being damaged by water, potions can be brewed using Water Breathing potion and Scute.
 
-####Sun Resistance 
+#### Sun Resistance 
 - Protects players from being affected by sunlight, potions can be brewed using Night Vision potion and Glow Ink Sac.
 
-####Fresh Air
+#### Fresh Air
 - Removes Avian's sleeping height limit, the only source is Create's air current.
 
 ### Diet Logics
