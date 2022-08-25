@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:apple",
+    "minecraft:baked_potato",
+    "minecraft:beetroot",
+    "minecraft:beetroot_soup",
+    "minecraft:bread",
+    "minecraft:cake",
+    "minecraft:carrot",
+    "minecraft:chorus_fruit",
+    "minecraft:cookie",
+    "minecraft:dried_kelp",
+    "minecraft:enchanted_golden_apple",
+    "minecraft:golden_apple",
+    "minecraft:golden_carrot",
+    "minecraft:melon_slice",
+    "minecraft:mushroom_stew",
+    "minecraft:poisonous_potato",
+    "minecraft:potato",
+    "minecraft:pumpkin_pie",
+    "minecraft:suspicious_stew",
+    "minecraft:sweet_berries",
+    "minecraft:glow_berries"
+  ]
+}

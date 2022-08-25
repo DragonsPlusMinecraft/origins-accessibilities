@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "oriacs:landwalking_helmet"
+    ]
+  },
+  "criteria": {
+    "enter_water": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:water"
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "oriacs:landwalking_helmet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_water",
+      "has_the_recipe"
+    ]
+  ]
+}

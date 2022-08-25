@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "oriacs:item/landwalking_helmet_overlay",
+        "layer1": "oriacs:item/diving_helmet"
+    }
+}

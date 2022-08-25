@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "c c",
+    "mcm",
+    "mcm"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:chain"
+    },
+    "m": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "result": {
+    "item": "oriacs:chainmembrane_chestplate"
+  }
+}

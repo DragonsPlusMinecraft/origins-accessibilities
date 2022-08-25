@@ -1,0 +1,35 @@
+{
+  "item.oriacs.umbrella": "伞",
+  "item.oriacs.diving_helmet": "潜水头盔",
+  "item.oriacs.landwalking_helmet": "陆行头盔",
+  "item.oriacs.chainmembrane_helmet": "覆膜锁链头盔",
+  "item.oriacs.chainmembrane_chestplate": "覆膜锁链胸甲",
+  "item.oriacs.chainmembrane_leggings": "覆膜锁链护腿",
+  "item.oriacs.chainmembrane_boots": "覆膜锁链靴子",
+
+  "effect.oriacs.water_resistance": "防水",
+  "item.minecraft.tipped_arrow.effect.water_resistance": "防水之箭",
+  "item.minecraft.potion.effect.water_resistance": "防水药水",
+  "item.minecraft.splash_potion.effect.water_resistance": "喷溅型防水药水",
+  "item.minecraft.lingering_potion.effect.water_resistance": "滞留型防水药水",
+
+  "effect.oriacs.sunlight_resistance": "阳光抗性",
+  "item.minecraft.tipped_arrow.effect.sunscreen": "防晒之箭",
+  "item.minecraft.potion.effect.sunscreen": "防晒药水",
+  "item.minecraft.splash_potion.effect.sunscreen": "喷溅型防晒药水",
+  "item.minecraft.lingering_potion.effect.sunscreen": "滞留型防晒药水",
+
+  "effect.oriacs.fresh_air": "清新空气",
+
+  "enchantment.oriacs.flying_protection": "飞行保护",
+
+  "config.oriacs.server.diet.strict_diet": "严格饮食限制",
+  "config.oriacs.server.helmet.diving.transform_time": "潜水头盔转换用时",
+  "config.oriacs.server.helmet.diving.respiration_multiplier": "潜水头盔水下呼吸倍率",
+  "config.oriacs.server.helmet.landwalking.transform_time": "陆行头盔转换用时",
+  "config.oriacs.server.helmet.landwalking.respiration_multiplier": "陆行头盔水下呼吸倍率",
+  "config.oriacs.server.umbrella.max_damage": "伞最大耐久",
+  "config.oriacs.server.umbrella.can_keep_out_rain": "伞能否遮蔽雨",
+  "config.oriacs.server.umbrella.can_keep_out_sunlight": "伞能否遮蔽阳光",
+  "config.oriacs.server.umbrella.max_keep_out_sunlight_color": "伞遮蔽阳光所需的R/G/B值上限"
+}

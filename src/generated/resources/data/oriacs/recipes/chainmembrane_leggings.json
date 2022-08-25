@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cmc",
+    "c c",
+    "m m"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:chain"
+    },
+    "m": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "result": {
+    "item": "oriacs:chainmembrane_leggings"
+  }
+}

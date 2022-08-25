@@ -1,0 +1,35 @@
+{
+  "item.oriacs.umbrella": "Umbrella",
+  "item.oriacs.diving_helmet": "Diving Helmet",
+  "item.oriacs.landwalking_helmet": "Landwalking Helmet",
+  "item.oriacs.chainmembrane_helmet": "Chainmembrane Helmet",
+  "item.oriacs.chainmembrane_chestplate": "Chainmembrane Chestplate",
+  "item.oriacs.chainmembrane_leggings": "Chainmembrane Leggings",
+  "item.oriacs.chainmembrane_boots": "Chainmembrane Boots",
+
+  "effect.oriacs.water_resistance": "Water Resistance",
+  "item.minecraft.tipped_arrow.effect.water_resistance": "Arrow of Water Resistance",
+  "item.minecraft.potion.effect.water_resistance": "Potion of Water Resistance",
+  "item.minecraft.splash_potion.effect.water_resistance": "Splash Potion of Water Resistance",
+  "item.minecraft.lingering_potion.effect.water_resistance": "Lingering Potion of Water Resistance",
+
+  "effect.oriacs.sunlight_resistance": "Sunlight Resistance",
+  "item.minecraft.tipped_arrow.effect.sunscreen": "Arrow of Sunscreen",
+  "item.minecraft.potion.effect.sunscreen": "Potion of Sunscreen",
+  "item.minecraft.splash_potion.effect.sunscreen": "Splash Potion of Sunscreen",
+  "item.minecraft.lingering_potion.effect.sunscreen": "Lingering Potion of Sunscreen",
+
+  "effect.oriacs.fresh_air": "Fresh Air",
+
+  "enchantment.oriacs.flying_protection": "Flying Protection",
+
+  "config.oriacs.server.diet.strict_diet": "Strict Diet",
+  "config.oriacs.server.helmet.diving.transform_time": "Diving Helmet Transform Time",
+  "config.oriacs.server.helmet.diving.respiration_multiplier": "Diving Helmet Respiration Multiplier",
+  "config.oriacs.server.helmet.landwalking.transform_time": "Landwalking Helmet Transform Time",
+  "config.oriacs.server.helmet.landwalking.respiration_multiplier": "Landwalking Helmet Respiration Multiplier",
+  "config.oriacs.server.umbrella.max_damage": "Umbrella Max Damage",
+  "config.oriacs.server.umbrella.can_keep_out_rain": "Can Umbrella Keep out Rain",
+  "config.oriacs.server.umbrella.can_keep_out_sunlight": "Can Umbrella Keep out Sunlight",
+  "config.oriacs.server.umbrella.max_keep_out_sunlight_color": "Max R/G/B for Umbrella to Keep out Sunlight"
+}
