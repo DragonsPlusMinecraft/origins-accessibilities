@@ -25,6 +25,7 @@
               },
               {
                 "type": "apoli:or",
+                "inverted": true,
                 "conditions": [
                   {
                     "type": "apoli:ingredient",
@@ -35,8 +36,7 @@
                   {
                     "type": "apoli:meat"
                   }
-                ],
-                "inverted": true
+                ]
               }
             ]
           },
