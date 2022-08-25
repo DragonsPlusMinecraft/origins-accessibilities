@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ccc",
-    "cwc",
-    "ggg"
+    "cgc",
+    "kwk"
   ],
   "key": {
     "g": {
@@ -11,6 +11,9 @@
     },
     "c": {
       "item": "minecraft:copper_ingot"
+    },
+    "k": {
+      "item": "minecraft:dried_kelp"
     },
     "w": {
       "item": "minecraft:water_bucket"
