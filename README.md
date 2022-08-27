@@ -14,7 +14,7 @@ Inspired by [Origins: Environmental Armor](https://github.com/MagicQuartz/Enviro
 - Slowly loses durability in rain but won't get completely broken
 - Slowly regains durability when exposed to normal weather, hot environments could accelerate the process.
 - Needs to be dyed to a color dark enough to keep out sunlight, and it won't cost durability.
-- Propeties can be configured in server config.
+- Properties can be configured in server config.
 
 #### Goggles
 - Defined in tag `forge:goggles` can be used to remove Enderian's visual problem on pumpkins.
@@ -39,7 +39,7 @@ providing the best protection for Elytrian.
 ### Enchantments
 
 #### Flying Protection
-- Protection enchantment which excluisvely protects player from "Fly into wall" damage.
+- Protection enchantment which exclusively protects player from "Fly into wall" damage.
 
 ### Effects
 
