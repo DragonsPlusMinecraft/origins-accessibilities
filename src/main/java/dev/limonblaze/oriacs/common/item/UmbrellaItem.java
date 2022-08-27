@@ -9,6 +9,7 @@ import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeableLeatherItem;
@@ -111,10 +112,14 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     public static void onLivingSpawn(LivingSpawnEvent.SpecialSpawn event) {
         if(event.getEntityLiving() instanceof Zombie zombie) {
             Random random = zombie.getRandom();
-            if(zombie.level.getDifficulty() == Difficulty.HARD && random.nextFloat() < OriacsServerConfig.CONFIG.UMBRELLA_SPAWN_WITH_ZOMBIE_CHANCE.get()) {
+            if(zombie.level.getDifficulty() == Difficulty.HARD &&
+               random.nextFloat() < OriacsServerConfig.CONFIG.UMBRELLA_SPAWN_WITH_ZOMBIE_CHANCE.get() &&
+               zombie.getItemInHand(InteractionHand.OFF_HAND).isEmpty()
+            ) {
                 UmbrellaItem umbrella = OriacsItems.UMBRELLA.get();
                 ItemStack stack = umbrella.getDefaultInstance();
                 umbrella.setColor(stack, random.nextInt(0xFFFFFF));
+                zombie.setItemInHand(InteractionHand.OFF_HAND, stack);
             }
         }
     }
