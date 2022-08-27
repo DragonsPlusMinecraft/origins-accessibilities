@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class OriacsItemModelProvider extends ItemModelProvider {
         Set<Item> specialItems = Set.of(OriacsItems.UMBRELLA.get(), OriacsItems.LANDWALKING_HELMET.get());
         Set<Item> basicItems = ForgeRegistries.ITEMS.getValues()
             .stream()
-            .filter(item -> item.getRegistryName().getNamespace().equals(Oriacs.ID))
+            .filter(item -> ForgeRegistries.ITEMS.getKey(item).getNamespace().equals(Oriacs.ID))
             .filter(item -> !(item instanceof BlockItem) || item instanceof ItemNameBlockItem)
             .collect(Collectors.toSet());
         basicItems.removeAll(specialItems);

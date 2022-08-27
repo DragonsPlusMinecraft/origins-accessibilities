@@ -40,9 +40,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
@@ -99,8 +99,8 @@ public class LandwalkingHelmetItem extends OriacsArmorItem {
         if(!level.isClientSide && player.tickCount % 20 == 0) {
             CompoundTag tag = stack.getOrCreateTag();
             int progress = tag.getInt(TRANSFORM_PROGRESS);
-            int respiration = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.RESPIRATION, stack);
-            if(!player.isEyeInFluid(FluidTags.WATER)) {
+            int respiration = stack.getEnchantmentLevel(Enchantments.RESPIRATION);
+            if(!player.isEyeInFluidType(Fluids.WATER.getFluidType())) {
                 if(IPowerContainer.hasPower(player, OriginsPowerTypes.WATER_BREATHING.get())) {
                    player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 30, 0, true, false, true));
                 }
@@ -118,10 +118,10 @@ public class LandwalkingHelmetItem extends OriacsArmorItem {
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess access) {
         if(action != ClickAction.PRIMARY) return false;
-        IFluidHandlerItem handler = other.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        IFluidHandlerItem handler = other.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
         if(handler == null) return false;
-        FluidStack bucket = new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME);
-        if(handler.fill(bucket, IFluidHandler.FluidAction.SIMULATE) == FluidAttributes.BUCKET_VOLUME) {
+        FluidStack bucket = new FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME);
+        if(handler.fill(bucket, IFluidHandler.FluidAction.SIMULATE) == FluidType.BUCKET_VOLUME) {
             handler.fill(bucket, IFluidHandler.FluidAction.EXECUTE);
             slot.set(this.transformToDiving(stack));
             access.set(handler.getContainer());

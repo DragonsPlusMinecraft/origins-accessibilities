@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -91,8 +92,8 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     }
     
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity entity = event.getEntityLiving();
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
+        LivingEntity entity = event.getEntity();
         if(entity.tickCount % 20 != 0) return;
         Level level = entity.level;
         BlockPos pos = entity.blockPosition();
@@ -110,8 +111,8 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     
     @SubscribeEvent
     public static void onLivingSpawn(LivingSpawnEvent.SpecialSpawn event) {
-        if(event.getEntityLiving() instanceof Zombie zombie) {
-            Random random = zombie.getRandom();
+        if(event.getEntity() instanceof Zombie zombie) {
+            RandomSource random = zombie.getRandom();
             if(zombie.level.getDifficulty() == Difficulty.HARD &&
                random.nextFloat() < OriacsServerConfig.CONFIG.UMBRELLA_SPAWN_WITH_ZOMBIE_CHANCE.get() &&
                zombie.getItemInHand(InteractionHand.OFF_HAND).isEmpty()

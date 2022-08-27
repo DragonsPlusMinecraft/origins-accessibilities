@@ -96,13 +96,12 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    implementation  fg.deobf("top.theillusivec4.caelus:caelus-forge:${caelus_version}")
+    implementation  fg.deobf("top.theillusivec4.caelus:caelus-forge:${mc_version}-${caelus_version}")
     implementation  fg.deobf("io.github.edwinmindcraft:calio-forge:${mc_version}-${calio_version}")
     implementation  fg.deobf("io.github.edwinmindcraft:apoli-forge:${mc_version}-${apoli_version}")
     implementation  fg.deobf("io.github.edwinmindcraft:origins-forge:${mc_version}-${origins_version}")
 
-    compileOnly     fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
-    runtimeOnly     fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+    runtimeOnly     fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
     compileOnly     fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}:api")
     runtimeOnly     fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
     runtimeOnly     fg.deobf("com.jozufozu.flywheel:flywheel-forge-${mc_version}:${flywheel_version}")
