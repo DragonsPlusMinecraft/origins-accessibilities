@@ -99,6 +99,7 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
         BlockPos pos = entity.blockPosition();
         boolean isInRain = level.isRainingAt(pos) || level.isRainingAt(new BlockPos(pos.getX(), entity.getBoundingBox().maxY, pos.getZ()));
         for(ItemStack stack : entity.getHandSlots()) {
+            if(!(stack.getItem() instanceof UmbrellaItem)) return;
             if(isInRain) {
                 stack.setDamageValue(Mth.clamp(stack.getDamageValue() + 1, 0, stack.getMaxDamage()));
             } else if(level.getBiome(pos).value().shouldSnowGolemBurn(pos)) {
