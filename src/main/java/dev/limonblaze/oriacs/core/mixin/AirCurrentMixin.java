@@ -24,7 +24,7 @@ public abstract class AirCurrentMixin {
     
     @ModifyVariable(
         method = "tickAffectedEntities",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V"),
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V", remap = true),
         name = "entity"
     )
     private Entity oriacs$applyFreshAirEffect(Entity entity) {

@@ -76,6 +76,11 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     }
     
     @Override
+    public boolean isBarVisible(ItemStack stack) {
+        return stack.getDamageValue() > 0;
+    }
+    
+    @Override
     public boolean canBeDepleted() {
         return false;
     }
