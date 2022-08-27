@@ -31,5 +31,6 @@
   "config.oriacs.server.umbrella.max_damage": "Umbrella Max Damage",
   "config.oriacs.server.umbrella.can_keep_out_rain": "Can Umbrella Keep out Rain",
   "config.oriacs.server.umbrella.can_keep_out_sunlight": "Can Umbrella Keep out Sunlight",
-  "config.oriacs.server.umbrella.max_keep_out_sunlight_color": "Max R/G/B for Umbrella to Keep out Sunlight"
+  "config.oriacs.server.umbrella.max_keep_out_sunlight_color": "Max R/G/B for Umbrella to Keep out Sunlight",
+  "config.oriacs.server.umbrella.spawn_with_zombie_chance": "Chance for Zombie spawn with umbrella in hard difiiculty"
 }

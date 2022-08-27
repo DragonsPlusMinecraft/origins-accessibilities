@@ -6,8 +6,11 @@
   "mixins": [
     "AirCurrentMixin",
     "EntityMixin",
+    "LivingEntityMixin",
+    "MobMixin",
     "PotionBrewingAccessor",
-    "SimpleEntityConditionMixin"
+    "SimpleEntityConditionMixin",
+    "TrownPotionMixin"
   ],
   "client": [
     "HumanoidArmorLayerMixin"

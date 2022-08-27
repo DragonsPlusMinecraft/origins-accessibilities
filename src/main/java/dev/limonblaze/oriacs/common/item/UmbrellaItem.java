@@ -2,21 +2,27 @@ package dev.limonblaze.oriacs.common.item;
 
 import dev.limonblaze.oriacs.common.Oriacs;
 import dev.limonblaze.oriacs.common.OriacsServerConfig;
+import dev.limonblaze.oriacs.common.registry.OriacsItems;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -26,6 +32,7 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     
     public UmbrellaItem(Properties properties) {
         super(properties.stacksTo(1).setNoRepair());
+        CauldronInteraction.WATER.put(this, CauldronInteraction.DYED_ITEM);
     }
     
     public boolean canKeepOutRain(ItemStack stack) {
@@ -69,7 +76,7 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     
     @Override
     public boolean canBeDepleted() {
-        return true;
+        return false;
     }
     
     @Override
@@ -96,6 +103,18 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
                 stack.setDamageValue(Mth.clamp(stack.getDamageValue() - 2, 0, stack.getMaxDamage()));
             } else {
                 stack.setDamageValue(Mth.clamp(stack.getDamageValue() - 1, 0, stack.getMaxDamage()));
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onLivingSpawn(LivingSpawnEvent.SpecialSpawn event) {
+        if(event.getEntityLiving() instanceof Zombie zombie) {
+            Random random = zombie.getRandom();
+            if(zombie.level.getDifficulty() == Difficulty.HARD && random.nextFloat() < OriacsServerConfig.CONFIG.UMBRELLA_SPAWN_WITH_ZOMBIE_CHANCE.get()) {
+                UmbrellaItem umbrella = OriacsItems.UMBRELLA.get();
+                ItemStack stack = umbrella.getDefaultInstance();
+                umbrella.setColor(stack, random.nextInt(0xFFFFFF));
             }
         }
     }
