@@ -24,6 +24,7 @@ public class OriacsServerConfig {
     public final ForgeConfigSpec.BooleanValue UMBRELLA_CAN_KEEP_OUT_RAIN;
     public final ForgeConfigSpec.BooleanValue UMBRELLA_CAN_KEEP_OUT_SUNLIGHT;
     public final ForgeConfigSpec.IntValue UMBRELLA_MAX_KEEP_OUT_SUNLIGHT_COLOR;
+    public final ForgeConfigSpec.DoubleValue UMBRELLA_SPAWN_WITH_ZOMBIE_CHANCE;
     
     public OriacsServerConfig(ForgeConfigSpec.Builder builder) {
         builder.push("diet");
@@ -84,6 +85,10 @@ public class OriacsServerConfig {
                 "If set to 255, umbrella of all colors can keep out sunlight"
             )
             .defineInRange("maxKeepOutSunlightColor", 127, 0, 255);
+        UMBRELLA_SPAWN_WITH_ZOMBIE_CHANCE = builder
+            .translation(translationKey("umbrella.spawn_with_zombie_chance"))
+            .comment("The chance for a zombie is spawned with an umbrella in hard difficulty")
+            .defineInRange("spawnWithZombieChance", 0.05, 0, 1);
         builder.pop();
     }
     

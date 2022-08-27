@@ -16,7 +16,7 @@ public class OriacsMobEffects {
         () -> new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0xAACCFF));
     
     public static final RegistryObject<SimpleMobEffect> SUNLIGHT_RESISTANCE = REGISTRY.register("sunlight_resistance",
-        () -> new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0xAAFFCC));
+        () -> new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0xFFCCAA));
     
     public static final RegistryObject<SimpleMobEffect> FRESH_AIR = REGISTRY.register("fresh_air",
         () -> new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0xFFFFFF));
