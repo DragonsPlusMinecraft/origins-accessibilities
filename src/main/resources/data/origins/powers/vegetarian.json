@@ -1,30 +1,30 @@
 {
   "loading_priority": 1000,
-  "type": "apoli:prevent_item_use",
+  "type": "origins:prevent_item_use",
   "item_condition": {
-    "type": "apoli:and",
+    "type": "origins:and",
     "conditions": [
       {
-        "type": "apoli:food"
+        "type": "origins:food"
       },
       {
-        "type": "apoli:ingredient",
+        "type": "origins:ingredient",
         "inverted": true,
         "ingredient": {
           "tag": "origins:ignore_diet"
         }
       },
       {
-        "type": "apoli:or",
+        "type": "origins:or",
         "conditions": [
           {
-            "type": "apoli:and",
+            "type": "origins:and",
             "conditions": [
               {
                 "type": "oriacs:strict_diet"
               },
               {
-                "type": "apoli:ingredient",
+                "type": "origins:ingredient",
                 "ingredient": {
                   "tag": "origins:vegetarian_diet"
                 }
@@ -32,23 +32,23 @@
             ]
           },
           {
-            "type": "apoli:and",
+            "type": "origins:and",
             "conditions": [
               {
                 "type": "oriacs:strict_diet",
                 "inverted": true
               },
               {
-                "type": "apoli:or",
+                "type": "origins:or",
                 "conditions": [
                   {
-                    "type": "apoli:ingredient",
+                    "type": "origins:ingredient",
                     "ingredient": {
                       "tag": "origins:meat"
                     }
                   },
                   {
-                    "type": "apoli:meat"
+                    "type": "origins:meat"
                   }
                 ]
               }
