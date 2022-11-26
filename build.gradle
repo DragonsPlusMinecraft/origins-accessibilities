@@ -1,7 +1,6 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://maven.parchmentmc.org' }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
@@ -12,7 +11,6 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
@@ -21,12 +19,12 @@ version = "${mc_version}-${mod_version}"
 group = maven_group
 archivesBaseName = archives_base_name
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
 
-    mappings channel: "parchment", version: "${mappings_version}-${mc_version}"
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    mappings channel: "official", version: "${mc_version}"
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -80,6 +78,14 @@ repositories {
         dir 'libs'
     }
     maven {
+        name 'Shedaniel Maven'
+        url 'https://maven.shedaniel.me/'
+    }
+    maven {
+        name 'Theillusivec4 Maven'
+        url = "https://maven.theillusivec4.top/"
+    }
+    maven {
         name 'Progwml6 Maven'
         url 'https://dvs1.progwml6.com/files/maven'
     }
@@ -87,26 +93,21 @@ repositories {
         name 'Tterrag maven'
         url 'https://maven.tterrag.com'
     }
-    maven {
-        name 'Theillusivec4 Maven'
-        url = "https://maven.theillusivec4.top/"
-    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    implementation  fg.deobf("top.theillusivec4.caelus:caelus-forge:${mc_version}-${caelus_version}")
-    implementation  fg.deobf("io.github.edwinmindcraft:calio-forge:${mc_version}-${calio_version}")
-    implementation  fg.deobf("io.github.edwinmindcraft:apoli-forge:${mc_version}-${apoli_version}")
     implementation  fg.deobf("io.github.edwinmindcraft:origins-forge:${mc_version}-${origins_version}")
+    implementation  fg.deobf("me.shedaniel:architectury-forge:${architectury_version}")
+    implementation  fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothconfig_version}")
+    implementation  fg.deobf("top.theillusivec4.caelus:caelus-forge:${mc_version}-${caelus_version}")
 
-    runtimeOnly     fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+    runtimeOnly     fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     compileOnly     fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}:api")
     runtimeOnly     fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
-    runtimeOnly     fg.deobf("com.jozufozu.flywheel:flywheel-forge-${mc_version}:${flywheel_version}")
-    runtimeOnly     fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
-    implementation  fg.deobf("com.simibubi.create:create-${mc_version}:${create_version}:slim")
+    runtimeOnly     fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
+    implementation  fg.deobf("com.simibubi.create:Create:mc${mc_version}_v${create_version}")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
@@ -128,7 +129,8 @@ processResources {
                'fml_requirements'       : fml_requirements,
                'forge_requirements'     : forge_requirements,
                'mc_requirements'        : mc_requirements,
-               'origins_requirements'   : origins_requirements
+               'origins_requirements'   : origins_requirements,
+               'create_requirements'    : create_requirements
     }
 }
 

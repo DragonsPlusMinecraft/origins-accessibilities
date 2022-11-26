@@ -1,8 +1,8 @@
 package dev.limonblaze.oriacs.core.mixin;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionBrewing;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 

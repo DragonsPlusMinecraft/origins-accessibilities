@@ -2,17 +2,20 @@ package dev.limonblaze.oriacs.common.registry;
 
 import dev.limonblaze.oriacs.common.Oriacs;
 import dev.limonblaze.oriacs.common.OriacsServerConfig;
-import io.github.edwinmindcraft.apoli.api.power.factory.ItemCondition;
-import io.github.edwinmindcraft.apoli.api.registry.ApoliRegistries;
-import io.github.edwinmindcraft.apoli.common.condition.item.SimpleItemCondition;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import io.github.apace100.origins.power.factory.condition.ConditionFactory;
+import io.github.apace100.origins.registry.ModRegistriesArchitectury;
+import io.github.apace100.origins.util.SerializableData;
+import net.minecraft.item.ItemStack;
 
 public class OriacsItemConditions {
     
-    public static final DeferredRegister<ItemCondition<?>> REGISTRY = DeferredRegister.create(ApoliRegistries.ITEM_CONDITION_KEY, Oriacs.ID);
+    public static void registerAll() {
+        register(new ConditionFactory<>(Oriacs.asResource("strict_diet"), new SerializableData(),
+            (data, stack) -> OriacsServerConfig.CONFIG.STRICT_DIET.get()));
+    }
     
-    public static RegistryObject<SimpleItemCondition> STRICT_DIET = REGISTRY.register("strict_diet",
-        () -> new SimpleItemCondition(stack -> OriacsServerConfig.CONFIG.STRICT_DIET.get()));
+    private static void register(ConditionFactory<ItemStack> conditionFactory) {
+        ModRegistriesArchitectury.ITEM_CONDITION.registerSupplied(conditionFactory.getSerializerId(), () -> conditionFactory);
+    }
     
 }

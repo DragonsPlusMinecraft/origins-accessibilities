@@ -3,21 +3,19 @@ package dev.limonblaze.oriacs.common.item;
 import dev.limonblaze.oriacs.common.Oriacs;
 import dev.limonblaze.oriacs.common.OriacsServerConfig;
 import dev.limonblaze.oriacs.common.registry.OriacsItems;
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.enchantment.IVanishable;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.item.IDyeableArmorItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.item.DyeableLeatherItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,12 +27,11 @@ import java.util.Random;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 @Mod.EventBusSubscriber(modid = Oriacs.ID)
-public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable {
-    public static final int BAR_COLOR = Mth.color(0.4F, 0.4F, 1.0F);
+public class UmbrellaItem extends Item implements IDyeableArmorItem, IVanishable {
+    public static final int BAR_COLOR = MathHelper.color(0.4F, 0.4F, 1.0F);
     
     public UmbrellaItem(Properties properties) {
         super(properties.stacksTo(1).setNoRepair());
-        CauldronInteraction.WATER.put(this, CauldronInteraction.DYED_ITEM);
     }
     
     public boolean canKeepOutRain(ItemStack stack) {
@@ -43,9 +40,12 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     
     public static boolean canKeepOutRain(LivingEntity entity) {
         ItemStack stack = entity.getMainHandItem();
-        if(stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutRain(stack)) return true;
+        Item item = stack.getItem();
+        if(item instanceof UmbrellaItem && ((UmbrellaItem)item).canKeepOutRain(stack))
+            return true;
         stack = entity.getOffhandItem();
-        return stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutRain(stack);
+        item = stack.getItem();
+        return item instanceof UmbrellaItem && ((UmbrellaItem)item).canKeepOutRain(stack);
     }
     
     public boolean canKeepOutSunlight(ItemStack stack) {
@@ -57,9 +57,11 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     
     public static boolean canKeepOutSunlight(LivingEntity entity) {
         ItemStack stack = entity.getMainHandItem();
-        if(stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutSunlight(stack)) return true;
+        Item item = stack.getItem();
+        if(item instanceof UmbrellaItem && ((UmbrellaItem)item).canKeepOutSunlight(stack)) return true;
         stack = entity.getOffhandItem();
-        return stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutSunlight(stack);
+        item = stack.getItem();
+        return item instanceof UmbrellaItem && ((UmbrellaItem)item).canKeepOutSunlight(stack);
     }
     
     /**
@@ -67,17 +69,17 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
      */
     @Override
     public int getColor(ItemStack pStack) {
-        CompoundTag compoundtag = pStack.getTagElement("display");
+        CompoundNBT compoundtag = pStack.getTagElement("display");
         return compoundtag != null && compoundtag.contains("color", 99) ? compoundtag.getInt("color") : 0xDCD9C0;
     }
     
     @Override
-    public int getBarColor(ItemStack pStack) {
+    public int getRGBDurabilityForDisplay(ItemStack pStack) {
         return BAR_COLOR;
     }
     
     @Override
-    public boolean isBarVisible(ItemStack stack) {
+    public boolean showDurabilityBar(ItemStack stack) {
         return stack.getDamageValue() > 0;
     }
     
@@ -97,20 +99,20 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     }
     
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
-        LivingEntity entity = event.getEntity();
+    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
+        LivingEntity entity = event.getEntityLiving();
         if(entity.tickCount % 20 != 0) return;
-        Level level = entity.level;
+        World level = entity.level;
         BlockPos pos = entity.blockPosition();
         boolean isInRain = level.isRainingAt(pos) || level.isRainingAt(new BlockPos(pos.getX(), entity.getBoundingBox().maxY, pos.getZ()));
         for(ItemStack stack : entity.getHandSlots()) {
             if(stack.getItem() instanceof UmbrellaItem) {
                 if(isInRain) {
-                    stack.setDamageValue(Mth.clamp(stack.getDamageValue() + 1, 0, stack.getMaxDamage()));
-                } else if(level.getBiome(pos).value().shouldSnowGolemBurn(pos)) {
-                    stack.setDamageValue(Mth.clamp(stack.getDamageValue() - 2, 0, stack.getMaxDamage()));
+                    stack.setDamageValue(MathHelper.clamp(stack.getDamageValue() + 1, 0, stack.getMaxDamage()));
+                } else if(level.getBiome(pos).getTemperature(pos) > 1.0F) {
+                    stack.setDamageValue(MathHelper.clamp(stack.getDamageValue() - 2, 0, stack.getMaxDamage()));
                 } else {
-                    stack.setDamageValue(Mth.clamp(stack.getDamageValue() - 1, 0, stack.getMaxDamage()));
+                    stack.setDamageValue(MathHelper.clamp(stack.getDamageValue() - 1, 0, stack.getMaxDamage()));
                 }
             }
         }
@@ -118,16 +120,17 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     
     @SubscribeEvent
     public static void onLivingSpawn(LivingSpawnEvent.SpecialSpawn event) {
-        if(event.getEntity() instanceof Zombie zombie) {
-            RandomSource random = zombie.getRandom();
+        if(event.getEntity() instanceof ZombieEntity) {
+            ZombieEntity zombie = (ZombieEntity) event.getEntity();
+            Random random = zombie.getRandom();
             if(zombie.level.getDifficulty() == Difficulty.HARD &&
                random.nextFloat() < OriacsServerConfig.CONFIG.UMBRELLA_SPAWN_WITH_ZOMBIE_CHANCE.get() &&
-               zombie.getItemInHand(InteractionHand.OFF_HAND).isEmpty()
+               zombie.getItemInHand(Hand.OFF_HAND).isEmpty()
             ) {
                 UmbrellaItem umbrella = OriacsItems.UMBRELLA.get();
                 ItemStack stack = umbrella.getDefaultInstance();
                 umbrella.setColor(stack, random.nextInt(0xFFFFFF));
-                zombie.setItemInHand(InteractionHand.OFF_HAND, stack);
+                zombie.setItemInHand(Hand.OFF_HAND, stack);
             }
         }
     }

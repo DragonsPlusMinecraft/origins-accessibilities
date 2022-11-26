@@ -2,19 +2,19 @@ package dev.limonblaze.oriacs.core.mixin;
 
 import dev.limonblaze.oriacs.common.item.UmbrellaItem;
 import dev.limonblaze.oriacs.common.registry.OriacsMobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.level.Level;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Mob.class)
+@Mixin(MobEntity.class)
 public abstract class MobMixin extends LivingEntity {
     
-    protected MobMixin(EntityType<? extends LivingEntity> entityType, Level level) {
+    protected MobMixin(EntityType<? extends LivingEntity> entityType, World level) {
         super(entityType, level);
     }
     

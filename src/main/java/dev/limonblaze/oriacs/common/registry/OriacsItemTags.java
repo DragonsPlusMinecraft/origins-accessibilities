@@ -1,25 +1,23 @@
 package dev.limonblaze.oriacs.common.registry;
 
+import com.google.common.collect.Sets;
 import io.github.apace100.origins.Origins;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITagManager;
+import net.minecraft.item.Item;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 
-import java.util.Set;
 import java.util.function.Supplier;
 
 public class OriacsItemTags {
-    public static final ITagManager<Item> REGISTRY = ForgeRegistries.ITEMS.tags();
     
-    public static final TagKey<Item> VEGETARIAN_DIET = register(Origins.identifier("vegetarian_diet"));
-    public static final TagKey<Item> GOGGLES = register(new ResourceLocation("forge", "goggles"));
+    public static final Tags.IOptionalNamedTag<Item> VEGETARIAN_DIET = register(Origins.identifier("vegetarian_diet"));
+    public static final Tags.IOptionalNamedTag<Item> GOGGLES = register(new ResourceLocation("forge", "goggles"));
+    public static final Tags.IOptionalNamedTag<Item> COPPER_INGOTS = register(new ResourceLocation("forge", "ingots/copper"));
     
     @SafeVarargs
-    public static TagKey<Item> register(ResourceLocation name, Supplier<Item>... defaultValues) {
-        assert REGISTRY != null;
-        return REGISTRY.createOptionalTagKey(name, Set.of(defaultValues));
+    public static Tags.IOptionalNamedTag<Item> register(ResourceLocation name, Supplier<Item>... defaultValues) {
+        return ItemTags.createOptional(name, Sets.newHashSet(defaultValues));
     }
     
 }

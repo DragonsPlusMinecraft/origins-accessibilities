@@ -2,46 +2,29 @@ package dev.limonblaze.oriacs.common.item;
 
 import dev.limonblaze.oriacs.common.OriacsServerConfig;
 import dev.limonblaze.oriacs.common.registry.OriacsItems;
-import io.github.apace100.origins.power.OriginsPowerTypes;
-import io.github.edwinmindcraft.apoli.api.component.IPowerContainer;
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import io.github.apace100.origins.power.PowerTypes;
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CauldronBlock;
+import net.minecraft.block.IBucketPickupHandler;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.SlotAccess;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickAction;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BucketPickup;
-import net.minecraft.world.level.block.LayeredCauldronBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -50,8 +33,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class DivingHelmetItem extends OriacsArmorItem {
     
     public DivingHelmetItem(Properties properties) {
-        super(OriacsArmorMaterials.DIVING, EquipmentSlot.HEAD, properties);
-        CauldronInteraction.WATER.put(this, this::waterCauldronInteraction);
+        super(OriacsArmorMaterials.DIVING, EquipmentSlotType.HEAD, properties);
     }
     
     public ItemStack transformToLandwalking(ItemStack original) {
@@ -61,58 +43,43 @@ public class DivingHelmetItem extends OriacsArmorItem {
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
         if(player.isSecondaryUseActive()) {
             ItemStack original = player.getItemInHand(hand);
-            BlockHitResult hit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
-            if(hit.getType() == HitResult.Type.BLOCK) {
+            BlockRayTraceResult hit = getPlayerPOVHitResult(level, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+            if(hit.getType() == RayTraceResult.Type.BLOCK) {
                 Direction direction = hit.getDirection();
                 BlockPos pos = hit.getBlockPos();
                 BlockPos pos1 = pos.relative(direction);
                 if(level.mayInteract(player, pos) && player.mayUseItemAt(pos1, direction, original)) {
                     BlockState state = level.getBlockState(pos);
-                    if(state.getBlock() instanceof BucketPickup pickup &&
-                        pickup.pickupBlock(level, pos, state).is(Items.WATER_BUCKET)) {
-                        ItemStack transformed = this.transformToLandwalking(original);
-                        player.awardStat(Stats.ITEM_USED.get(this));
-                        pickup.getPickupSound(state).ifPresent(sound -> player.playSound(sound, 1.0F, 1.0F));
-                        level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
-                        return InteractionResultHolder.sidedSuccess(transformed, level.isClientSide);
+                    if(state.getBlock() instanceof IBucketPickupHandler) {
+                        IBucketPickupHandler pickup = (IBucketPickupHandler) state.getBlock();
+                        if(pickup.takeLiquid(level, pos, state).isSame(Fluids.WATER)) {
+                            ItemStack transformed = this.transformToLandwalking(original);
+                            player.awardStat(Stats.ITEM_USED.get(this));
+                            player.playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
+                            return ActionResult.sidedSuccess(transformed, level.isClientSide);
+                        }
                     }
                 }
             }
-            return InteractionResultHolder.pass(original);
+            return ActionResult.pass(original);
         } else {
             return super.use(level, player, hand);
         }
     }
     
-    @Override
-    public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess access) {
-        if(action != ClickAction.PRIMARY) return false;
-        IFluidHandlerItem handler = other.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
-        if(handler == null) return false;
-        FluidStack bucket = new FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME);
-        FluidStack simulate = handler.drain(bucket, IFluidHandler.FluidAction.SIMULATE);
-        if(simulate.getAmount() >= FluidType.BUCKET_VOLUME) {
-            handler.drain(bucket, IFluidHandler.FluidAction.EXECUTE);
-            slot.set(this.transformToLandwalking(stack));
-            access.set(handler.getContainer());
-            player.level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F, false);
-            return true;
-        }
-        return false;
-    }
     
     @Override
-    public void onArmorTick(ItemStack stack, Level level, Player player) {
+    public void onArmorTick(ItemStack stack, World level, PlayerEntity player) {
         if(!level.isClientSide && player.tickCount % 20 == 0) {
-            CompoundTag tag = stack.getOrCreateTag();
+            CompoundNBT tag = stack.getOrCreateTag();
             int progress = tag.getInt(TRANSFORM_PROGRESS);
-            int respiration = stack.getEnchantmentLevel(Enchantments.RESPIRATION);
-            if(player.isEyeInFluidType(Fluids.WATER.getFluidType())) {
-                if(!IPowerContainer.hasPower(player, OriginsPowerTypes.WATER_BREATHING.get())) {
-                   player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 30, 0, true, false, true));
+            int respiration = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.RESPIRATION, stack);
+            if(player.isEyeInFluid(FluidTags.WATER)) {
+                if(!PowerTypes.WATER_BREATHING.isActive(player)) {
+                   player.addEffect(new EffectInstance(Effects.WATER_BREATHING, 30, 0, true, false, true));
                 }
                 tag.putInt(TRANSFORM_PROGRESS, progress + 1);
             } else tag.putInt(TRANSFORM_PROGRESS, Math.max(0, progress -1));
@@ -120,24 +87,23 @@ public class DivingHelmetItem extends OriacsArmorItem {
                 * (1 + respiration * OriacsServerConfig.CONFIG.DIVING_HELMET_RESPIRATION_MULTIPLIER.get())) {
                 tag.putInt(TRANSFORM_PROGRESS, 0);
                 ItemStack transformed = this.transformToLandwalking(stack);
-                player.setItemSlot(EquipmentSlot.HEAD, transformed);
+                player.setItemSlot(EquipmentSlotType.HEAD, transformed);
             }
         }
     }
     
-    public InteractionResult waterCauldronInteraction(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        if(state.getValue(LayeredCauldronBlock.LEVEL) == 3) {
+    public ActionResultType waterCauldronInteraction(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack) {
+        if(state.getValue(CauldronBlock.LEVEL) == 3) {
             if(!level.isClientSide) {
                 player.setItemInHand(hand, this.transformToLandwalking(stack));
                 player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(this));
                 level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
-                level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
+            return ActionResultType.sidedSuccess(level.isClientSide);
         }
-        return InteractionResult.PASS;
+        return ActionResultType.PASS;
     }
     
 }

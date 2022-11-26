@@ -1,10 +1,11 @@
 package dev.limonblaze.oriacs.common.enchantment;
 
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.enchantment.ProtectionEnchantment;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -12,12 +13,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class FlyingProtectionEnchantment extends ProtectionEnchantment {
     
     public FlyingProtectionEnchantment() {
-        super(Rarity.RARE, Type.ALL, EquipmentSlot.HEAD);
+        super(Rarity.RARE, Type.ALL, EquipmentSlotType.HEAD);
     }
     
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return Enchantments.RESPIRATION.canEnchant(stack);
+        Item item = stack.getItem();
+        return item instanceof ArmorItem && item.getEquipmentSlot(stack) == EquipmentSlotType.HEAD;
     }
     
     public boolean isTreasureOnly() {

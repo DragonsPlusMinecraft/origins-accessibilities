@@ -2,8 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "create:goggles",
-      "required": false
+      "id": "create:goggles"
     }
   ]
 }

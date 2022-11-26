@@ -2,10 +2,10 @@ package dev.limonblaze.oriacs.common.registry;
 
 import dev.limonblaze.oriacs.common.Oriacs;
 import dev.limonblaze.oriacs.common.enchantment.FlyingProtectionEnchantment;
-import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 public class OriacsEnchantments {
     

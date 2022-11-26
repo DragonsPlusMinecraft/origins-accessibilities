@@ -10,7 +10,7 @@
       "item": "minecraft:glass"
     },
     "c": {
-      "item": "minecraft:copper_ingot"
+      "tag": "forge:ingots/copper"
     },
     "k": {
       "item": "minecraft:dried_kelp"

@@ -1,20 +1,20 @@
 package dev.limonblaze.oriacs.common.effect;
 
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import org.jetbrains.annotations.Nullable;
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierManager;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectType;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class SimpleMobEffect extends MobEffect {
+public class SimpleMobEffect extends Effect {
     
-    public SimpleMobEffect(MobEffectCategory category, int color) {
+    public SimpleMobEffect(EffectType category, int color) {
         super(category, color);
     }
     
@@ -30,9 +30,9 @@ public class SimpleMobEffect extends MobEffect {
     }
     
     @Override
-    public void addAttributeModifiers(LivingEntity pLivingEntity, AttributeMap pAttributeMap, int pAmplifier) {}
+    public void addAttributeModifiers(LivingEntity pLivingEntity, AttributeModifierManager pAttributeMap, int pAmplifier) {}
     
     @Override
-    public void removeAttributeModifiers(LivingEntity pLivingEntity, AttributeMap pAttributeMap, int pAmplifier) {}
+    public void removeAttributeModifiers(LivingEntity pLivingEntity, AttributeModifierManager pAttributeMap, int pAmplifier) {}
     
 }

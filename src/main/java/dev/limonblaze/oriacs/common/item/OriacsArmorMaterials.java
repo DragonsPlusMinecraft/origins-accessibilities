@@ -1,12 +1,13 @@
 package dev.limonblaze.oriacs.common.item;
 
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
+import dev.limonblaze.oriacs.common.registry.OriacsItemTags;
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.IArmorMaterial;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.common.util.Lazy;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,8 +16,8 @@ import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public enum OriacsArmorMaterials implements ArmorMaterial {
-    DIVING(() -> Ingredient.of(Items.COPPER_INGOT),
+public enum OriacsArmorMaterials implements IArmorMaterial {
+    DIVING(() -> Ingredient.of(OriacsItemTags.COPPER_INGOTS),
         9,
         new int[]{1, 4, 5, 2},
         1, 0, 9,
@@ -68,12 +69,12 @@ public enum OriacsArmorMaterials implements ArmorMaterial {
     }
     
     @Override
-    public int getDurabilityForSlot(EquipmentSlot slot) {
+    public int getDurabilityForSlot(EquipmentSlotType slot) {
         return durabilities[slot.getIndex()];
     }
     
     @Override
-    public int getDefenseForSlot(EquipmentSlot slot) {
+    public int getDefenseForSlot(EquipmentSlotType slot) {
         return armorValues[slot.getIndex()];
     }
     
