@@ -28,7 +28,7 @@ import java.util.Random;
 @ParametersAreNonnullByDefault
 @Mod.EventBusSubscriber(modid = Oriacs.ID)
 public class UmbrellaItem extends Item implements IDyeableArmorItem, IVanishable {
-    public static final int BAR_COLOR = MathHelper.color(0.4F, 0.4F, 1.0F);
+    public static final int BAR_COLOR = color(0.4F, 0.4F, 1.0F);
     
     public UmbrellaItem(Properties properties) {
         super(properties.stacksTo(1).setNoRepair());
@@ -133,6 +133,15 @@ public class UmbrellaItem extends Item implements IDyeableArmorItem, IVanishable
                 zombie.setItemInHand(Hand.OFF_HAND, stack);
             }
         }
+    }
+
+    private static int color(float r, float g, float b) {
+        return color(MathHelper.floor(r * 255.0F), MathHelper.floor(g * 255.0F), MathHelper.floor(b * 255.0F));
+    }
+
+    private static int color(int r, int g, int b) {
+        int a = (r << 8) + g;
+        return (a << 8) + b;
     }
     
 }
