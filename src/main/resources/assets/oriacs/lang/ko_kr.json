@@ -1,0 +1,36 @@
+{
+  "item.oriacs.umbrella": "우산",
+  "item.oriacs.diving_helmet": "잠수 헬멧",
+  "item.oriacs.landwalking_helmet": "육지 보행 헬멧",
+  "item.oriacs.chainmembrane_helmet": "체인막 투구",
+  "item.oriacs.chainmembrane_chestplate": "체인막 흉갑",
+  "item.oriacs.chainmembrane_leggings": "체인막 레깅스",
+  "item.oriacs.chainmembrane_boots": "체인막 부츠",
+
+  "effect.oriacs.water_resistance": "물 저항",
+  "item.minecraft.tipped_arrow.effect.water_resistance": "물 저항의 화살",
+  "item.minecraft.potion.effect.water_resistance": "물 저항의 물약",
+  "item.minecraft.splash_potion.effect.water_resistance": "투척용 물 저항의 물약",
+  "item.minecraft.lingering_potion.effect.water_resistance": "잔류형 물 저항의 물약",
+
+  "effect.oriacs.sunlight_resistance": "자외선 차단",
+  "item.minecraft.tipped_arrow.effect.sunscreen": "자외선 차단의 화살",
+  "item.minecraft.potion.effect.sunscreen": "자외선 차단의 물약",
+  "item.minecraft.splash_potion.effect.sunscreen": "투척용 자외선 차단의 물약",
+  "item.minecraft.lingering_potion.effect.sunscreen": "잔류형 자외선 차단의 물약",
+
+  "effect.oriacs.fresh_air": "신선한 공기",
+
+  "enchantment.oriacs.flying_protection": "비행 보호",
+
+  "config.oriacs.server.diet.strict_diet": "엄격한 식단",
+  "config.oriacs.server.helmet.diving.transform_time": "잠수 헬멧 변환 시간",
+  "config.oriacs.server.helmet.diving.respiration_multiplier": "잠수 헬멧 호흡 배수",
+  "config.oriacs.server.helmet.landwalking.transform_time": "육지 보행 헬멧 변환 시간",
+  "config.oriacs.server.helmet.landwalking.respiration_multiplier": "육지 보행 헬멧 호흡 배수",
+  "config.oriacs.server.umbrella.max_damage": "우산 최대 내구도",
+  "config.oriacs.server.umbrella.can_keep_out_rain": "우산이 비를 막을 수 있는가",
+  "config.oriacs.server.umbrella.can_keep_out_sunlight": "우산이 햇빛을 막을 수 있는가",
+  "config.oriacs.server.umbrella.max_keep_out_sunlight_color": "우산이 햇빛을 막기 위한 최대 R/G/B 값",
+  "config.oriacs.server.umbrella.spawn_with_zombie_chance": "어려움 난이도에서 우산을 든 좀비 생성 확률"
+}
