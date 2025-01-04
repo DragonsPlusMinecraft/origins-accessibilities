@@ -1,5 +1,6 @@
 package dev.limonblaze.oriacs.common.enchantment;
 
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -23,10 +24,10 @@ public class FlyingProtectionEnchantment extends ProtectionEnchantment {
     public boolean isTreasureOnly() {
         return true;
     }
-    
+
     @Override
     public int getDamageProtection(int level, DamageSource source) {
-        if(!source.isBypassInvul() && source.getMsgId().contains("flyIntoWall")) {
+        if(!source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && source.getMsgId().contains("flyIntoWall")) {
             return level * 3;
         }
         return 0;

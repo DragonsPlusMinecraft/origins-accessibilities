@@ -53,7 +53,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class LandwalkingHelmetItem extends OriacsArmorItem {
     
     public LandwalkingHelmetItem(Properties properties) {
-        super(OriacsArmorMaterials.DIVING, EquipmentSlot.HEAD, properties);
+        super(OriacsArmorMaterials.DIVING, Type.HELMET, properties);
         CauldronInteraction.EMPTY.put(this, this::emptyCauldronInteraction);
     }
     
@@ -125,7 +125,7 @@ public class LandwalkingHelmetItem extends OriacsArmorItem {
             handler.fill(bucket, IFluidHandler.FluidAction.EXECUTE);
             slot.set(this.transformToDiving(stack));
             access.set(handler.getContainer());
-            player.level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F, false);
+            player.level().playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F, false);
             return true;
         }
         return false;

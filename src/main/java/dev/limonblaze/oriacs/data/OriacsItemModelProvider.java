@@ -3,6 +3,7 @@ package dev.limonblaze.oriacs.data;
 import dev.limonblaze.oriacs.common.Oriacs;
 import dev.limonblaze.oriacs.common.registry.OriacsItems;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class OriacsItemModelProvider extends ItemModelProvider {
     
-    public OriacsItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+    public OriacsItemModelProvider(PackOutput generator, ExistingFileHelper existingFileHelper) {
         super(generator, Oriacs.ID, existingFileHelper);
     }
     

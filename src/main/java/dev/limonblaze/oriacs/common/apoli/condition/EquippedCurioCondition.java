@@ -39,7 +39,7 @@ public class EquippedCurioCondition extends EntityCondition<EquippedCurioConditi
                     for(int slot = 0; slot < curioStacksHandler.getSlots(); ++slot) {
                         if(ConfiguredItemCondition.check(
                             configuration.condition,
-                            entity.level,
+                            entity.level(),
                             curioStacksHandler.getStacks().getStackInSlot(slot))
                         ) return true;
                     }

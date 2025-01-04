@@ -13,7 +13,7 @@ import java.util.Locale;
 public class OriacsArmorItem extends ArmorItem {
     public static final String TRANSFORM_PROGRESS = "TransformProgress";
     
-    public OriacsArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties) {
+    public OriacsArmorItem(ArmorMaterial material, Type slot, Properties properties) {
         super(material, slot, properties);
     }
     

@@ -50,7 +50,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class DivingHelmetItem extends OriacsArmorItem {
     
     public DivingHelmetItem(Properties properties) {
-        super(OriacsArmorMaterials.DIVING, EquipmentSlot.HEAD, properties);
+        super(OriacsArmorMaterials.DIVING, Type.HELMET, properties);
         CauldronInteraction.WATER.put(this, this::waterCauldronInteraction);
     }
     
@@ -98,7 +98,7 @@ public class DivingHelmetItem extends OriacsArmorItem {
             handler.drain(bucket, IFluidHandler.FluidAction.EXECUTE);
             slot.set(this.transformToLandwalking(stack));
             access.set(handler.getContainer());
-            player.level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F, false);
+            player.level().playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F, false);
             return true;
         }
         return false;

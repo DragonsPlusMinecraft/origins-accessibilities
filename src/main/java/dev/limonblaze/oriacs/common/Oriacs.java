@@ -3,7 +3,9 @@ package dev.limonblaze.oriacs.common;
 import dev.limonblaze.oriacs.client.OriacsClient;
 import dev.limonblaze.oriacs.common.registry.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
@@ -28,6 +30,7 @@ public class Oriacs {
         OriacsEnchantments.REGISTRY.register(modBus);
         OriacsItemConditions.REGISTRY.register(modBus);
         OriacsEntityConditions.REGISTRY.register(modBus);
+        modBus.addListener(this::addCreative);
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
         modLoadingContext.registerConfig(ModConfig.Type.SERVER, OriacsServerConfig.SPEC);
         CURIOS_LOADED = ModList.get().isLoaded("curios");
@@ -39,4 +42,18 @@ public class Oriacs {
         return new ResourceLocation(ID, path);
     }
 
+    public void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(OriacsItems.UMBRELLA);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+            event.accept(OriacsItems.DIVING_HELMET);
+            event.accept(OriacsItems.LANDWALKING_HELMET);
+            event.accept(OriacsItems.CHAINMEMBRANE_HELMET);
+            event.accept(OriacsItems.CHAINMEMBRANE_CHESTPLATE);
+            event.accept(OriacsItems.CHAINMEMBRANE_LEGGINGS);
+            event.accept(OriacsItems.CHAINMEMBRANE_BOOTS);
+        }
+    }
 }

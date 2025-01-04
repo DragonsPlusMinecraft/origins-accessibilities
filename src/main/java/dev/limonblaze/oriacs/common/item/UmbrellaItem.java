@@ -19,12 +19,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -93,21 +92,21 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return ItemStack.isSameIgnoreDurability(oldStack, newStack);
+        return ItemStack.isSameItem(oldStack, newStack);
     }
     
     @SubscribeEvent
     public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
         if(entity.tickCount % 20 != 0) return;
-        Level level = entity.level;
+        Level level = entity.level();
         BlockPos pos = entity.blockPosition();
-        boolean isInRain = level.isRainingAt(pos) || level.isRainingAt(new BlockPos(pos.getX(), entity.getBoundingBox().maxY, pos.getZ()));
+        boolean isInRain = level.isRainingAt(pos) || level.isRainingAt(new BlockPos(pos.getX(), (int) entity.getBoundingBox().maxY, pos.getZ()));
         for(ItemStack stack : entity.getHandSlots()) {
             if(stack.getItem() instanceof UmbrellaItem) {
                 if(isInRain) {
                     stack.setDamageValue(Mth.clamp(stack.getDamageValue() + 1, 0, stack.getMaxDamage()));
-                } else if(level.getBiome(pos).value().shouldSnowGolemBurn(pos)) {
+                } else if(level.getBiome(pos).value().getTemperature(pos) > 1.0F) {
                     stack.setDamageValue(Mth.clamp(stack.getDamageValue() - 2, 0, stack.getMaxDamage()));
                 } else {
                     stack.setDamageValue(Mth.clamp(stack.getDamageValue() - 1, 0, stack.getMaxDamage()));
@@ -117,10 +116,10 @@ public class UmbrellaItem extends Item implements DyeableLeatherItem, Vanishable
     }
     
     @SubscribeEvent
-    public static void onLivingSpawn(LivingSpawnEvent.SpecialSpawn event) {
+    public static void onLivingSpawn(MobSpawnEvent.FinalizeSpawn event) {
         if(event.getEntity() instanceof Zombie zombie) {
             RandomSource random = zombie.getRandom();
-            if(zombie.level.getDifficulty() == Difficulty.HARD &&
+            if(zombie.level().getDifficulty() == Difficulty.HARD &&
                random.nextFloat() < OriacsServerConfig.CONFIG.UMBRELLA_SPAWN_WITH_ZOMBIE_CHANCE.get() &&
                zombie.getItemInHand(InteractionHand.OFF_HAND).isEmpty()
             ) {

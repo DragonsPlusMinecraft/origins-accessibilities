@@ -4,6 +4,7 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -66,15 +67,15 @@ public enum OriacsArmorMaterials implements ArmorMaterial {
                 11 * durabilityMultiplier
             }, armorValues, toughness, knockbackResistance, enchantmentValue, equipSound);
     }
-    
+
     @Override
-    public int getDurabilityForSlot(EquipmentSlot slot) {
-        return durabilities[slot.getIndex()];
+    public int getDurabilityForType(ArmorItem.Type type) {
+        return durabilities[type.getSlot().getIndex()];
     }
-    
+
     @Override
-    public int getDefenseForSlot(EquipmentSlot slot) {
-        return armorValues[slot.getIndex()];
+    public int getDefenseForType(ArmorItem.Type type) {
+        return armorValues[type.getSlot().getIndex()];
     }
     
     @Override
